@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="./Style/Style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
 
 </head>
 
@@ -57,10 +58,107 @@
         </nav>
     </header>
 
-    <main>
-        <section class="poster w-100">
-            <img src="./Media/Images/Poster1.png" class="d-block w-100" alt="...">
-        </section>
+    <section class="poster w-100">
+        <img src="./Media/Images/Poster1.png" class="d-block w-100" alt="...">
+    </section>
+
+    <main class="container-fluid py-5">
+
+        <h2 class="text-center">Co by ste si dali dnes??</h2>
+
+        <div class="row g-4">
+
+            <aside class="col-lg-3">
+                <section class="card shadow-sm sticky-lg-top" aria-label="Filtre menu">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <span class="fw-semibold"><i class="bi bi-funnel me-1"></i>Filtre</span>
+                        <button class="btn btn-sm btn-outline-secondary d-lg-none" type="button">Zobraziť</button>
+                    </div>
+
+                    <form id="filters" class="card-body collapse d-lg-block">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text"><i class="bi bi-search"></i></span>
+                            <input type="search" class="form-control" name="query" placeholder="Hľadať jedlo...">
+                        </div>
+
+                        <div class="mb-3">
+                            <div class="form-label small text-uppercase text-body-secondary fw-semibold">Deň</div>
+                            <div class="d-flex flex-wrap gap-2">
+                                <input type="radio" class="btn-check" autocomplete="off">
+                                <label class="btn btn-outline-primary btn-sm">Pondelok</label>
+
+                                <input type="radio" class="btn-check" autocomplete="off">
+                                <label class="btn btn-outline-primary btn-sm">Utorok</label>
+
+                                <input type="radio" class="btn-check" autocomplete="off">
+                                <label class="btn btn-outline-primary btn-sm">Streda</label>
+
+                                <input type="radio" class="btn-check" autocomplete="off">
+                                <label class="btn btn-outline-primary btn-sm">Štvtok</label>
+
+                                <input type="radio" class="btn-check" autocomplete="off">
+                                <label class="btn btn-outline-primary btn-sm">Piatok</label>
+
+                                <input type="radio" class="btn-check" autocomplete="off">
+                                <label class="btn btn-outline-dark btn-sm">Celý týždeň</label>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <div class="form-label small text-uppercase text-body-secondary fw-semibold">Reštaurácie</div>
+                            <div class="d-flex flex-wrap gap-2">
+                                <input type="checkbox" class="btn-check" autocomplete="off" checked>
+                                <label class="btn btn-outline-success btn-sm">Place 1</label>
+
+                                <input type="checkbox" class="btn-check" autocomplete="off" checked>
+                                <label class="btn btn-outline-success btn-sm">Place 2</label>
+
+                                <input type="checkbox" class="btn-check" autocomplete="off" checked>
+                                <label class="btn btn-outline-success btn-sm">Place 3</label>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <div class="form-label small text-uppercase text-body-secondary fw-semibold">Typ jedla</div>
+                            <div class="btn-group w-100" role="group">
+                                <input type="radio" class="btn-check" id="t-all" value="all" autocomplete="off" checked>
+                                <label class="btn btn-outline-secondary btn-sm">Všetko</label>
+
+                                <input type="radio" class="btn-check" id="t-soup" value="polievka" autocomplete="off">
+                                <label class="btn btn-outline-secondary btn-sm">Polievky</label>
+
+                                <input type="radio" class="btn-check" value="hlavne" autocomplete="off">
+                                <label class="btn btn-outline-secondary btn-sm">Hlavné</label>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="maxPrice"
+                                class="form-label small text-uppercase text-body-secondary fw-semibold">
+                                Max. cena: <output class="text-body">15</output> €
+                            </label>
+                            <input type="range" class="form-range" min="3" max="15"
+                                step="0.5" value="15">
+                        </div>
+
+                        <button type="reset" class="btn btn-outline-danger w-100">
+                            <i class="bi bi-x-circle me-1"></i>Zrušiť filtre
+                        </button>
+                    </form>
+                </section>
+            </aside>
+
+            <section class="col-lg-9">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h2 class="h4 mb-0">Menu</h2>
+                    <span class="badge text-bg-secondary"></span>
+                </div>
+                <div>
+                    
+                </div>
+            </section>
+
+        </div>
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
