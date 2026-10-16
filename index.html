@@ -176,6 +176,94 @@
                     <h2 class="h4 mb-0">Menu</h2>
                     <span class="badge text-bg-secondary"></span>
                 </div>
+
+                <div id="menu" class="d-flex flex-wrap gap-3">
+                   <!-- LOADING -->
+                    <div id="menuLoading" class="d-flex flex-wrap gap-3 placeholder-glow" role="status">
+                        <span class="visually-hidden">Načítavam menu…</span>
+
+                        <article class="card dish-card dish-card--skeleton" aria-hidden="true">
+                            <header class="card-header d-flex align-items-center gap-3">
+                                <div class="dish-photo placeholder flex-shrink-0"></div>
+                                <div class="flex-grow-1">
+                                    <span class="placeholder col-7 d-block mb-2"></span>
+                                    <span class="placeholder col-4 d-block"></span>
+                                </div>
+                            </header>
+                            <div class="card-body">
+                                <span class="placeholder col-3 mb-3 d-block"></span>
+                                <span class="placeholder col-10 d-block mb-2"></span>
+                                <span class="placeholder col-6 d-block"></span>
+                            </div>
+                            <footer class="card-footer">
+                                <span class="placeholder col-2 me-1"></span>
+                                <span class="placeholder col-1 me-1"></span>
+                                <span class="placeholder col-1"></span>
+                            </footer>
+                        </article>
+
+                        <article class="card dish-card dish-card--skeleton" aria-hidden="true">
+                            <header class="card-header d-flex align-items-center gap-3">
+                                <div class="dish-photo placeholder flex-shrink-0"></div>
+                                <div class="flex-grow-1">
+                                    <span class="placeholder col-7 d-block mb-2"></span>
+                                    <span class="placeholder col-4 d-block"></span>
+                                </div>
+                            </header>
+                            <div class="card-body">
+                                <span class="placeholder col-3 mb-3 d-block"></span>
+                                <span class="placeholder col-10 d-block mb-2"></span>
+                                <span class="placeholder col-6 d-block"></span>
+                            </div>
+                            <footer class="card-footer">
+                                <span class="placeholder col-2 me-1"></span>
+                                <span class="placeholder col-1 me-1"></span>
+                                <span class="placeholder col-1"></span>
+                            </footer>
+                        </article>
+
+                        <article class="card dish-card dish-card--skeleton" aria-hidden="true">
+                            <header class="card-header d-flex align-items-center gap-3">
+                                <div class="dish-photo placeholder flex-shrink-0"></div>
+                                <div class="flex-grow-1">
+                                    <span class="placeholder col-7 d-block mb-2"></span>
+                                    <span class="placeholder col-4 d-block"></span>
+                                </div>
+                            </header>
+                            <div class="card-body">
+                                <span class="placeholder col-3 mb-3 d-block"></span>
+                                <span class="placeholder col-10 d-block mb-2"></span>
+                                <span class="placeholder col-6 d-block"></span>
+                            </div>
+                            <footer class="card-footer">
+                                <span class="placeholder col-2 me-1"></span>
+                                <span class="placeholder col-1 me-1"></span>
+                                <span class="placeholder col-1"></span>
+                            </footer>
+                        </article>
+                    </div>
+
+                    <!-- FILTER ERORR -->
+                    <div id="menuEmpty" class="text-center py-5 m-auto d-none" role="status">
+                        <i class="bi bi-search display-1 text-body-tertiary"></i>
+                        <h3 class="h5 mt-3">Žiadne jedlo sme nenašli</h3>
+                        <p class="text-body-secondary mb-3">Skúste zmeniť filtre alebo vyhľadávanie.</p>
+                        <button type="button" id="clearFiltersBtn" class="btn btn-outline-danger">
+                            <i class="bi bi-x-circle me-1"></i>Zrušiť filtre
+                        </button>
+                    </div>
+
+                    <!-- 3) ВСЯ ЗАГРУЗКА НЕ УДАЛАСЬ -->
+                    <div id="menuError" class="text-center py-5 m-auto d-none" role="alert">
+                        <i class="bi bi-cloud-slash display-1 text-body-tertiary"></i>
+                        <h3 class="h5 mt-3">Menu sa nepodarilo načítať</h3>
+                        <p class="text-body-secondary mb-3">Stránky reštaurácií sú momentálne nedostupné. Skúste to
+                            prosím neskôr.</p>
+                        <button type="button" id="retryBtn" class="btn btn-primary">
+                            <i class="bi bi-arrow-clockwise me-1"></i>Skúsiť znova
+                        </button>
+                    </div>
+                </div>
             </section>
 
         </div>

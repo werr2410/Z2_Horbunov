@@ -72,3 +72,129 @@
 
     }
 }
+
+
+.dish-card { 
+    width: 20rem; max-width: 100%;
+}
+
+.dish-photo {
+    width: 4.5rem; height: 4.5rem;
+}
+
+/* ===== Základ karty jedla ===== */
+.dish-card {
+  --accent: #e8590c;
+  --accent-dark: #a63d00;
+  --accent-soft: #fff4e6;
+  --header-bg: linear-gradient(135deg, var(--accent), var(--accent-dark));
+
+  width: 20rem;
+  max-width: 100%;
+  border: 0;
+  background: var(--accent-soft);
+  color: #2b2b2b;
+  overflow: hidden;
+  box-shadow: 0 .5rem 1.25rem rgb(0 0 0 / .12);
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.dish-card:hover {
+  transform: translateY(-.25rem);
+  box-shadow: 0 .9rem 1.75rem rgb(0 0 0 / .18);
+}
+
+.dish-card .card-header {
+  background: var(--header-bg);
+  color: #fff;
+  border: 0;
+  padding: 1rem 1.25rem;
+}
+.dish-card .card-header a { color: #fff; }
+.dish-card .card-header time { color: rgb(255 255 255 / .8); }
+.dish-card .card-body { background: transparent; padding: 1.25rem; }
+.dish-card .card-footer {
+  background: transparent;
+  border-top: 2px dashed var(--accent);
+  padding: .9rem 1.25rem 1.1rem;
+}
+
+/* fotka / emoji v kruhu */
+.dish-photo {
+  width: 4.5rem;
+  height: 4.5rem;
+  border-radius: 50%;
+  background: #fff;
+  border: .2rem solid #fff;
+  box-shadow: 0 .25rem .6rem rgb(0 0 0 / .25);
+  font-size: 2.25rem;
+  line-height: 1;
+}
+
+.dish-type {
+  background: var(--accent);
+  color: #fff;
+  font-size: .7rem;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+.dish-name { font-weight: 700; }
+.dish-price {
+  background: #fff;
+  color: var(--accent-dark);
+  border: 2px solid var(--accent);
+  border-radius: 999px;
+  padding: .1rem .7rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.dish-allergen {
+  background: #fff;
+  color:#000 !important;
+  color: var(--accent-dark);
+  border: 1px solid var(--accent);
+}
+
+.dish-card--soup {
+  --accent: #e8590c;
+  --accent-dark: #a63d00;
+  --accent-soft: #fff4e6;
+  --header-bg:
+    radial-gradient(circle at 88% 22%, rgb(255 255 255 / .28) 0 .6rem, transparent .65rem),
+    radial-gradient(circle at 72% 75%, rgb(255 255 255 / .18) 0 .95rem, transparent 1rem),
+    linear-gradient(135deg, #ff922b, #e8590c);
+  border-radius: 1rem 1rem 3rem 3rem;
+}
+
+.dish-card--main {
+  --accent: #c92a2a;
+  --accent-dark: #7a1717;
+  --accent-soft: #fff5f5;
+  --header-bg:
+    repeating-linear-gradient(135deg, rgb(255 255 255 / .09) 0 .6rem, transparent .6rem 1.2rem),
+    linear-gradient(135deg, #e03131, #7a1717);
+  border-radius: .5rem;
+}
+.dish-card--main .dish-name { font-size: 1.1rem; }
+
+.dish-card--salad {
+  --accent: #2f9e44;
+  --accent-dark: #1f6b2e;
+  --accent-soft: #ebfbee;
+  --header-bg:
+    radial-gradient(circle at 12% 88%, rgb(255 255 255 / .25) 0 1rem, transparent 1.05rem),
+    radial-gradient(circle at 90% 28%, rgb(255 255 255 / .2) 0 .7rem, transparent .75rem),
+    linear-gradient(135deg, #51cf66, #2b8a3e);
+  border-radius: 2rem .5rem 2rem .5rem;
+}
+
+.dish-card--skeleton {
+  --accent: #ced4da;
+  --accent-dark: #adb5bd;
+  --accent-soft: #f8f9fa;
+  --header-bg: #e9ecef;
+  color: #adb5bd;
+  pointer-events: none;
+}
+.dish-card--skeleton:hover { transform: none; }
+.dish-card--skeleton .card-header { color: #adb5bd; }
+.dish-card--skeleton .dish-photo { background-color: #ced4da; border-color: #f8f9fa; }
