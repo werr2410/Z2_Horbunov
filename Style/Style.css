@@ -74,15 +74,19 @@
 }
 
 
-.dish-card { 
-    width: 20rem; max-width: 100%;
+.dish-card {
+  --card-min: 18rem;
+  --card-max: 24rem;
+
+  flex: 1 1 var(--card-min);         
+  min-width: min(var(--card-min), 100%);
+  max-width: var(--card-max);
 }
 
 .dish-photo {
     width: 4.5rem; height: 4.5rem;
 }
 
-/* ===== Základ karty jedla ===== */
 .dish-card {
   --accent: #e8590c;
   --accent-dark: #a63d00;
@@ -185,6 +189,19 @@
     radial-gradient(circle at 90% 28%, rgb(255 255 255 / .2) 0 .7rem, transparent .75rem),
     linear-gradient(135deg, #51cf66, #2b8a3e);
   border-radius: 2rem .5rem 2rem .5rem;
+}
+
+.dish-card--sweet {
+  --accent: #d6336c;
+  --accent-dark: #a61e4d;
+  --accent-soft: #fff0f6;
+  --header-bg:
+    radial-gradient(circle at 14% 82%, rgb(255 255 255 / .35) 0 .3rem, transparent .35rem),
+    radial-gradient(circle at 34% 24%, rgb(255 255 255 / .3) 0 .25rem, transparent .3rem),
+    radial-gradient(circle at 78% 70%, rgb(255 255 255 / .35) 0 .35rem, transparent .4rem),
+    radial-gradient(circle at 92% 18%, rgb(255 255 255 / .3) 0 .25rem, transparent .3rem),
+    linear-gradient(135deg, #f06595, #a61e4d);
+  border-radius: 1.75rem;
 }
 
 .dish-card--skeleton {
