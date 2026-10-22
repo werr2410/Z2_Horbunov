@@ -48,7 +48,7 @@
                 </div>
 
                 <div class="d-flex flex-column align-item-center justify-content-center">
-                    <a href="#" class="authorization-button">Aktualizovat</a>
+                    <a href="#" id="updateBtnNav" class="authorization-button">Aktualizovať</a>
                 </div>
 
                 <button class="navbar-toggler pe-0" type="button" data-bs-toggle="offcanvas"
@@ -65,7 +65,7 @@
 
     <main class="container-fluid py-5">
 
-        <h2 class="text-center">Co by ste si dali dnes??</h2>
+        <h2 class="text-center p-5">Co by ste si dali dnes??</h2>
 
         <div class="row g-4">
 
@@ -96,13 +96,13 @@
 
                                 <input type="radio" class="btn-check" name="day" id="day-4" value="4"
                                     autocomplete="off">
-                                <label class="btn btn-outline-primary btn-sm" for="day-4">Štvtok</label>
+                                <label class="btn btn-outline-primary btn-sm" for="day-4">Štvrtok</label>
 
                                 <input type="radio" class="btn-check" name="day" id="day-5" value="5"
                                     autocomplete="off">
                                 <label class="btn btn-outline-primary btn-sm" for="day-5">Piatok</label>
 
-                                <input type="radio" class="btn-check" name="day" id="day-all" value="day-all"
+                                <input type="radio" class="btn-check" name="day" id="day-all" value="all"
                                     autocomplete="off">
                                 <label class="btn btn-outline-dark btn-sm" for="day-all">Celý týždeň</label>
                             </div>
@@ -111,39 +111,31 @@
                         <div class="mb-3">
                             <div class="form-label small text-uppercase text-body-secondary fw-semibold">Reštaurácie
                             </div>
-                            <div class="d-flex flex-wrap gap-2">
-                                <input type="checkbox" name="places" id="r-1" value="place1" class="btn-check"
-                                    autocomplete="off" checked>
-                                <label class="btn btn-outline-success btn-sm" for="r-1">Place 1</label>
-
-                                <input type="checkbox" name="places" id="r-2" value="place2" class="btn-check"
-                                    autocomplete="off" checked>
-                                <label class="btn btn-outline-success btn-sm" for="r-2">Place 2</label>
-
-                                <input type="checkbox" name="places" id="r-3" value="place3" class="btn-check"
-                                    autocomplete="off" checked>
-                                <label class="btn btn-outline-success btn-sm" for="r-3">Place 3</label>
-                            </div>
+                            <div id="restaurantFilters" class="d-flex flex-wrap gap-2"></div>
                         </div>
 
                         <div class="mb-3">
                             <div class="form-label small text-uppercase text-body-secondary fw-semibold">Typ jedla</div>
-                            <div class="btn-group w-100" role="group">
+                            <div class="d-flex flex-wrap gap-2" role="radiogroup" aria-label="Typ jedla">
                                 <input type="radio" class="btn-check" name="t-type" id="t-all" value="all"
                                     autocomplete="off" checked>
                                 <label class="btn btn-outline-secondary btn-sm" for="t-all">Všetko</label>
 
-                                <input type="radio" class="btn-check" name="t-type" id="t-soup" value="polievka"
+                                <input type="radio" class="btn-check" name="t-type" id="t-soup" value="soup"
                                     autocomplete="off">
                                 <label class="btn btn-outline-secondary btn-sm" for="t-soup">Polievky</label>
 
-                                <input type="radio" class="btn-check" name="t-type" id="t-main" value="hlavne"
+                                <input type="radio" class="btn-check" name="t-type" id="t-main" value="main"
                                     autocomplete="off">
                                 <label class="btn btn-outline-secondary btn-sm" for="t-main">Hlavné</label>
 
-                                <input type="radio" class="btn-check" name="type" id="t-salad" value="salad"
+                                <input type="radio" class="btn-check" name="t-type" id="t-salad" value="salad"
                                     autocomplete="off">
                                 <label class="btn btn-outline-secondary btn-sm" for="t-salad">Šaláty</label>
+
+                                <input type="radio" class="btn-check" name="t-type" id="t-sweet" value="sweet"
+                                    autocomplete="off">
+                                <label class="btn btn-outline-secondary btn-sm" for="t-sweet">Dezerty</label>
                             </div>
                         </div>
 
@@ -156,15 +148,24 @@
                                 step="0.5" value="15">
                         </div>
 
-                        <button type="reset" class="btn btn-outline-danger w-100">
+                        <button type="button" id="resetFiltersBtn" class="btn btn-outline-danger w-100">
                             <i class="bi bi-x-circle me-1"></i>Zrušiť filtre
                         </button>
 
                         <div class="reset-data pt-5">
-                            <button type="button" id="updateBtn" class="btn authorization-button w-100">Aktualizovať
-                                menu</button>
-                            <p class="text-center mt-2 mb-0">Naposledy aktualizované: <span
-                                    id="lastUpdate">loading...</span></p>
+                            <button type="button" id="updateBtn" class="btn authorization-button w-100">Aktualizovať menu</button>
+                            <button type="button" id="clearDataBtn" class="btn btn-outline-secondary btn-sm w-100 mt-2">
+                                <i class="bi bi-trash me-1"></i>Vymazať uložené dáta
+                            </button>
+
+                            <div class="form-check form-switch mt-3">
+                                <input class="form-check-input" type="checkbox" role="switch" id="sourceLocal"
+                                    autocomplete="off">
+                                <label class="form-check-label small" for="sourceLocal">Lokálna kópia stránok (ladenie)</label>
+                            </div>
+
+                            <p class="text-center small fw-semibold mt-3 mb-1">Naposledy aktualizované:</p>
+                            <ul id="lastUpdate" class="list-unstyled small text-center text-body-secondary mb-0"></ul>
                         </div>
                     </form>
                 </section>
@@ -172,13 +173,18 @@
 
             <section class="col-lg-9">
                 <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h2 class="h4 mb-0">Menu</h2>
-                    <span class="badge text-bg-secondary"></span>
+                    <h2 class="h1 mb-0 w-100 text-center">Menu</h2>
+                    <span id="menuCount" class="badge text-bg-secondary d-none"></span>
                 </div>
 
+                <div id="menuAlerts" aria-live="polite"></div>
+
                 <div id="menu" class="d-flex flex-wrap justify-content-center gap-3">
+                    <!-- ZOZNAM JEDÁL (plní script.js) -->
+                    <div id="dishList" class="d-flex flex-wrap justify-content-center gap-3 w-100 d-none"></div>
+
                     <!-- LOADING -->
-                    <div id="menuLoading" class="d-flex flex-wrap gap-3 placeholder-glow d-none" role="status">
+                    <div id="menuLoading" class="d-flex flex-wrap gap-3 placeholder-glow" role="status">
                         <span class="visually-hidden">Načítavam menu…</span>
 
                         <article class="card dish-card dish-card--skeleton" aria-hidden="true">

@@ -122,7 +122,6 @@
   padding: .9rem 1.25rem 1.1rem;
 }
 
-/* fotka / emoji v kruhu */
 .dish-photo {
   width: 4.5rem;
   height: 4.5rem;
@@ -215,3 +214,8 @@
 .dish-card--skeleton:hover { transform: none; }
 .dish-card--skeleton .card-header { color: #adb5bd; }
 .dish-card--skeleton .dish-photo { background-color: #ced4da; border-color: #f8f9fa; }
+
+.dish-photo { overflow: hidden; }
+.dish-photo img { width: 100%; height: 100%; object-fit: cover; }
+
+#menuAlerts:not(:empty) { margin-bottom: 1rem; }
