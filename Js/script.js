@@ -1,19 +1,11 @@
 "use strict";
 
-const LOCAL_STORAGE_REST = "REST_STORAGE";       
-const LOCAL_STORAGE_UPDATE = "UPDATES_STORAGE";  
-const LOCAL_STORAGE_SOURCE = "SOURCE_MODE";     
+const LOCAL_STORAGE_REST = "REST_STORAGE";
+const LOCAL_STORAGE_UPDATE = "UPDATES_STORAGE";
+const LOCAL_STORAGE_SOURCE = "SOURCE_MODE";
 
-// Adresa proxy z cvičenia. URL reštaurácie sa pripojí na koniec (zakódovaná).
 const PROXY_URL = "";
 const REQUEST_TIMEOUT_MS = 10000;
-
-const TypeOfDish = Object.freeze({
-    SOUP: 'soup',
-    MAIN: 'main',
-    SALAD: 'salad',
-    SWEET: 'sweet'
-});
 
 const TYPE_INFO = Object.freeze({
     [TypeOfDish.SOUP]: { label: 'Polievka', emoji: '🍲' },
@@ -22,278 +14,40 @@ const TYPE_INFO = Object.freeze({
     [TypeOfDish.SWEET]: { label: 'Dezert', emoji: '🍰' }
 });
 
-// poradie typov pri zobrazení
 const TYPE_ORDER = [TypeOfDish.SOUP, TypeOfDish.MAIN, TypeOfDish.SALAD, TypeOfDish.SWEET];
-
-const DAY_NAMES = { 1: 'Pondelok', 2: 'Utorok', 3: 'Streda', 4: 'Štvrtok', 5: 'Piatok' };
-
-const ALLERGENS = Object.freeze({
-    1: 'Obilniny',
-    2: 'Kôrovce',
-    3: 'Vajcia',
-    4: 'Ryby',
-    5: 'Arašidy',
-    6: 'Sójové zrná',
-    7: 'Mlieko',
-    8: 'Orechy',
-    9: 'Zeler',
-    10: 'Horčica',
-    11: 'Sezamové semená',
-    12: 'Oxid siričitý',
-    13: 'Vlčí bôb',
-    14: 'Mäkkýše'
-});
-class SourceError extends Error { 
-    constructor(message) { super(message); this.name = 'SourceError'; }
-}
-class ParseError extends Error { 
-    constructor(message) { super(message); this.name = 'ParseError'; }
-}
-
-class Dish {
-    constructor(restaurant, day, type, name, price, allergens = [], date, photo = null) {
-        this.restaurant = restaurant;
-        this.day = day;
-        this.type = type;
-        this.name = name;
-        this.price = price;
-        this.allergens = allergens;
-        this.date = date;
-        this.photo = photo;
-    }
-
-    static fromJSON(o) {
-        if (!o || typeof o !== 'object') return null;
-        if (!o.restaurant || !o.restaurant.id || !TYPE_INFO[o.type] || !DAY_NAMES[o.day]) return null;
-        if (typeof o.name !== 'string' || o.name === '') return null;
-
-        return new Dish(
-            o.restaurant,
-            o.day,
-            o.type,
-            o.name,
-            typeof o.price === 'number' ? o.price : null,
-            Array.isArray(o.allergens) ? o.allergens : [],
-            o.date ?? null,
-            o.photo ?? null
-        );
-    }
-
-    get priceText() {
-        return this.price != null ? this.price.toFixed(2).replace('.', ',') + ' €' : '—';
-    }
-
-    get dateText() {
-        if (!this.date) return '';
-        const [, m, d] = this.date.split('-');
-        return `${Number(d)}. ${Number(m)}.`;
-    }
-
-    getHTMLDish() {
-        const info = TYPE_INFO[this.type];
-        const makeEmoji = () => $('<span>', {
-            role: 'img',
-            'aria-label': info.label,
-            text: info.emoji
-        });
-
-        const photo = $('<div>', {
-            class: 'dish-photo flex-shrink-0 d-flex align-items-center justify-content-center'
-        });
-
-        if (this.photo) {
-            photo.append(
-                $('<img>', {
-                    src: this.photo,
-                    alt: this.name,
-                    loading: 'lazy',
-                    referrerpolicy: 'no-referrer'
-                }).on('error', function () {
-                    $(this).replaceWith(makeEmoji());
-                })
-            );
-        } else {
-            photo.append(makeEmoji());
-        }
-
-        const timeAttrs = {
-            class: 'small',
-            text: DAY_NAMES[this.day] + (this.date ? ' ' + this.dateText : '')
-        };
-        if (this.date) timeAttrs.datetime = this.date;
-
-        const restaurantBox = $('<div>', { class: 'overflow-hidden' }).append(
-            $('<a>', {
-                class: 'fw-semibold text-decoration-none d-block text-truncate',
-                href: this.restaurant.url,
-                target: '_blank',
-                rel: 'noopener',
-                text: this.restaurant.name
-            }),
-            $('<time>', timeAttrs)
-        );
-
-        const header = $('<header>', {
-            class: 'card-header d-flex align-items-center gap-3'
-        }).append(photo, restaurantBox);
-
-        const body = $('<div>', {
-            class: 'card-body'
-        }).append(
-            $('<span>', {
-                class: 'badge dish-type mb-2',
-                text: info.label
-            }),
-
-            $('<div>', {
-                class: 'd-flex justify-content-between align-items-start gap-2'
-            }).append(
-                $('<h3>', {
-                    class: 'h6 mb-0 dish-name',
-                    text: this.name
-                }),
-                $('<span>', {
-                    class: 'dish-price',
-                    text: this.priceText
-                })
-            )
-        );
-
-        const list = $('<ul>', { class: 'list-unstyled d-flex flex-wrap gap-1 mb-0' });
-        if (this.allergens.length) {
-            this.allergens.forEach(n => {
-                list.append($('<li>').append(
-                    $('<span>', {
-                        class: 'badge rounded-pill dish-allergen',
-                        title: ALLERGENS[n] ?? 'Alergén',
-                        text: n
-                    })
-                ));
-            });
-        } else {
-            list.append($('<li>', { class: 'small text-body-secondary', text: '—' }));
-        }
-
-        const footer = $('<footer>', {
-            class: 'card-footer d-flex flex-row justify-content-between'
-        }).append($('<div>', {
-            class: 'small text-body-secondary mb-1',
-            text: 'Alergény'
-        })).append(list);
-
-        return $('<article>', { class: `card dish-card dish-card--${this.type}` })
-            .append(header, body, footer);
-    }
-}
-
-function cleanText(s) {
-    return String(s ?? '').replace(/\s+/g, ' ').trim();
-}
-
-function stripDiacritics(s) {
-    return String(s).normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-}
-
-// "4,80 € / 2,40 €" -> 4.8 
-function parsePrice(text) {
-    const m = /(\d+(?:[.,]\d+)?)/.exec(String(text ?? ''));
-    return m ? parseFloat(m[1].replace(',', '.')) : null;
-}
-
-// "(1,3,7)" -> [1, 3, 7]
-function parseAllergens(text) {
-    const nums = (String(text ?? '').match(/\d+/g) || [])
-        .map(Number)
-        .filter(n => ALLERGENS[n]);
-    return [...new Set(nums)].sort((a, b) => a - b);
-}
-
-// future 
-function absoluteUrl(src, base) {
-    if (!src) return null;
-    try {
-        const u = new URL(src, base);
-        return (u.protocol === 'http:' || u.protocol === 'https:') ? u.href : null;
-    } catch (e) {
-        return null;
-    }
-}
-
-function dateForDay(day, ref = new Date()) {
-    const d = new Date(ref.getFullYear(), ref.getMonth(), ref.getDate());
-    const sinceMonday = (d.getDay() + 6) % 7;
-    d.setDate(d.getDate() - sinceMonday + (day - 1));
-    const mm = String(d.getMonth() + 1).padStart(2, '0');
-    const dd = String(d.getDate()).padStart(2, '0');
-    return `${d.getFullYear()}-${mm}-${dd}`;
-}
-
-function restaurantRef(restaurant) {
-    return { id: restaurant.id, name: restaurant.name, url: restaurant.url };
-}
-
-function eatAndMeetType(title) {
-    const t = stripDiacritics(title).toLowerCase();
-    if (t.startsWith('polievk')) return TypeOfDish.SOUP;
-    if (t.startsWith('salat')) return TypeOfDish.SALAD;
-    if (t.startsWith('sladk') || t.startsWith('mucn')) return TypeOfDish.SWEET;
-    return TypeOfDish.MAIN; 
-}
-
-function parseEatAndMeetItem($item, day, restaurant) {
-    const title = cleanText($item.find('.menu-title h4').first().text());
-
-    const $desc = $item.find('.menu-description .desc').first();
-    const name = cleanText($desc.clone().find('span').remove().end().text());
-    if (!name) return null;
-
-    const allergens = parseAllergens($desc.find('span').text());
-    const price = parsePrice($item.find('.menu-title .price').first().text());
-    const photo = absoluteUrl($item.find('.menu-thumbnail img').attr('src'), restaurant.liveUrl);
-
-    return new Dish(restaurantRef(restaurant), day, eatAndMeetType(title), name, price,
-        allergens, dateForDay(day), photo);
-}
-
-function parseEatAndMeet(doc, restaurant) {
-    const $panes = $(doc).find('.weak-menu > .tab-pane');
-    if ($panes.length === 0) {
-        throw new ParseError('Na stránke sa nenašlo týždenné menu (zmenila sa štruktúra stránky).');
-    }
-
-    const result = [];
-    $panes.each(function () {
-        const m = /^day-(\d)$/.exec(this.id);
-        const day = m ? Number(m[1]) : 0;
-        if (day < 1 || day > 5) return;  
-
-        $(this).find('.menu-body').each(function () {
-            try {
-                const dish = parseEatAndMeetItem($(this), day, restaurant);
-                if (dish) result.push(dish);
-            } catch (e) {
-                console.warn('Položku menu sa nepodarilo spracovať', e);  
-            }
-        });
-    });
-    return result;
-}
 
 const RESTAURANTS = [
     {
         id: 'eatandmeet',
         name: 'Eat & Meet',
-        url: 'https://eatandmeet.sk/',                          
-        liveUrl: 'https://eatandmeet.sk/',                      
-        localUrl: 'TemplatePages/EatAndMeetDownloaded.html',  
+        url: 'https://eatandmeet.sk/',
+        liveUrl: 'https://eatandmeet.sk/',
+        localUrl: 'TemplatePages/EatAndMeetDownloaded.html',
         parse: parseEatAndMeet
+    },
+    {
+        id: 'fiitfood',
+        name: 'FiitFood',
+        url: 'http://www.freefood.sk/menu/',
+        liveUrl: 'http://www.freefood.sk/menu/',
+        localUrl: 'TemplatePages/FIITFOOD.html',
+        paneId: 'fiit-food',
+        parse: parseFreeFood
+    },
+    {
+        id: 'prifuk',
+        name: 'Jedáleň PriF UK',
+        url: 'https://www.delikanti.sk/',
+        liveUrl: 'https://www.delikanti.sk/',
+        localUrl: 'TemplatePages/PriFUK.html',
+        parse: parsePrifUk
     }
 ];
 
-let dishes = [];          
-let updates = {};         
+let dishes = [];
+let updates = {};
 let isLoading = false;
-let loadFailed = false;  
+let loadFailed = false;
 
 function storageGet(key) {
     try { return localStorage.getItem(key); } catch (e) { return null; }
@@ -321,7 +75,9 @@ function LoadFromLocalStorage() {
         const rawUpdates = JSON.parse(storageGet(LOCAL_STORAGE_UPDATE));
         if (!Array.isArray(rawDishes) || !rawUpdates || typeof rawUpdates !== 'object') return false;
 
-        dishes = rawDishes.map(o => Dish.fromJSON(o)).filter(Boolean);
+        dishes = rawDishes
+            .map(o => Dish.fromJSON(o))
+            .filter(d => d && RESTAURANTS.some(r => r.id === d.restaurant.id));
         updates = rawUpdates;
         return dishes.length > 0;
     } catch (e) {
@@ -374,9 +130,12 @@ function fetchHtml(url) {
     });
 }
 
-async function loadRestaurant(restaurant) {
-    const html = await fetchHtml(getSourceUrl(restaurant));
-    const doc = new DOMParser().parseFromString(html, 'text/html');   
+async function loadRestaurant(restaurant, pageCache) {
+    const url = getSourceUrl(restaurant);
+    if (!pageCache.has(url)) pageCache.set(url, fetchHtml(url));
+
+    const html = await pageCache.get(url);
+    const doc = new DOMParser().parseFromString(html, 'text/html');
     const parsed = restaurant.parse(doc, restaurant);
     if (parsed.length === 0) throw new ParseError('Na stránke sa nenašli žiadne jedlá.');
     return parsed;
@@ -394,7 +153,8 @@ async function ParseMenu(restaurants = RESTAURANTS) {
     clearAlerts();
     showState('loading');
 
-    const results = await Promise.allSettled(restaurants.map(r => loadRestaurant(r)));
+    const pageCache = new Map();
+    const results = await Promise.allSettled(restaurants.map(r => loadRestaurant(r, pageCache)));
 
     let failedCount = 0;
     results.forEach((res, i) => {
@@ -423,17 +183,92 @@ async function ParseMenu(restaurants = RESTAURANTS) {
     render();
 }
 
-function ClearData() {
-    if (isLoading) return;
-    storageRemove(LOCAL_STORAGE_REST);
-    storageRemove(LOCAL_STORAGE_UPDATE);
-    dishes = [];
-    updates = {};
-    loadFailed = false;
-    clearAlerts();
-    renderLastUpdates();
-    render();
-    showAlert('info', 'Uložené dáta boli vymazané. Stlačte „Aktualizovať menu“ pre opätovné načítanie.');
+function renderDishCard(dish) {
+    const info = TYPE_INFO[dish.type];
+    const makeEmoji = () => $('<span>', { role: 'img', 'aria-label': info.label, text: info.emoji });
+
+    const photo = $('<div>', {
+        class: 'dish-photo flex-shrink-0 d-flex align-items-center justify-content-center'
+    });
+
+    if (dish.photo) {
+        photo.append(
+            $('<img>', {
+                src: dish.photo,
+                alt: dish.name,
+                loading: 'lazy',
+                referrerpolicy: 'no-referrer'
+            }).on('error', function () {
+                $(this).replaceWith(makeEmoji());
+            })
+        );
+    } else {
+        photo.append(makeEmoji());
+    }
+
+    const dayText = DAY_NAMES[dish.day] + (dish.date ? ' ' + dish.dateText : '');
+
+    const restaurantBox = $('<div>', { class: 'overflow-hidden' }).append(
+        $('<a>', {
+            class: 'fw-semibold text-decoration-none d-block text-truncate',
+            href: dish.restaurant.url,
+            target: '_blank',
+            rel: 'noopener',
+            text: dish.restaurant.name
+        }),
+        dish.date
+            ? $('<time>', { class: 'small', datetime: dish.date, text: dayText })
+            : $('<span>', { class: 'small', text: dayText })
+    );
+
+    const header = $('<header>', {
+        class: 'card-header d-flex align-items-center gap-3'
+    }).append(photo, restaurantBox);
+
+    const badges = $('<div>', { class: 'mb-2' }).append(
+        $('<span>', { class: 'badge dish-type', text: info.label })
+    );
+    if (dish.vegetarian) {
+        badges.append($('<span>', { class: 'badge text-bg-success ms-1', text: 'Vegetariánske' }));
+    }
+
+    const body = $('<div>', { class: 'card-body' }).append(
+        badges,
+        $('<div>', {
+            class: 'd-flex justify-content-between align-items-start gap-2'
+        }).append(
+            $('<h3>', { class: 'h6 mb-0 dish-name', text: dish.name }),
+            $('<span>', { class: 'dish-price', text: dish.priceText })
+        )
+    );
+    if (dish.weight) {
+        body.append($('<div>', { class: 'small text-body-secondary mt-1', text: dish.weight }));
+    }
+
+    const list = $('<ul>', { class: 'list-unstyled d-flex flex-wrap gap-1 mb-0' });
+    if (dish.allergens.length) {
+        dish.allergens.forEach(n => {
+            list.append($('<li>').append(
+                $('<span>', {
+                    class: 'badge rounded-pill dish-allergen',
+                    title: ALLERGENS[n] ?? 'Alergén',
+                    text: n
+                })
+            ));
+        });
+    } else {
+        list.append($('<li>', { class: 'small text-body-secondary', text: '—' }));
+    }
+
+    const footer = $('<footer>', {
+        class: 'card-footer d-flex flex-row justify-content-between'
+    }).append($('<div>', {
+        class: 'small text-body-secondary mb-1',
+        text: 'Alergény'
+    })).append(list);
+
+    return $('<article>', { class: `card dish-card dish-card--${dish.type}` })
+        .append(header, body, footer);
 }
 
 function isWeekend() {
@@ -463,26 +298,18 @@ function buildRestaurantFilters() {
 }
 
 function getFilters() {
-    const maxPrice = parseFloat($('#maxPrice').val());
     return {
-        day: $('input[name="day"]:checked').val() || String(defaultDay()),   
+        day: $('input[name="day"]:checked').val() || String(defaultDay()),
         places: $('input[name="places"]:checked').map((_, el) => el.value).get(),
-        type: $('input[name="t-type"]:checked').val() || 'all',
-        maxPrice: isNaN(maxPrice) ? Infinity : maxPrice
+        types: $('input[name="t-type"]:checked').map((_, el) => el.value).get()
     };
 }
 
 function resetFilters() {
     setDefaultDay();
     $('input[name="places"]').prop('checked', true);
-    $('#t-all').prop('checked', true);
-    $('#maxPrice').val($('#maxPrice').attr('max'));
-    updatePriceOut();
+    $('input[name="t-type"]').prop('checked', false);
     render();
-}
-
-function updatePriceOut() {
-    $('#priceOut').text(String($('#maxPrice').val()).replace('.', ','));
 }
 
 function restaurantIndex(dish) {
@@ -495,8 +322,8 @@ function formatCount(n) {
     return `${n} jedál`;
 }
 
-// 'loading' | 'list' | 'empty' | 'error' | 'none'
 function showState(state) {
+    $('#menuNoData').toggleClass('d-none', state !== 'nodata');
     $('#menuLoading').toggleClass('d-none', state !== 'loading');
     $('#dishList').toggleClass('d-none', state !== 'list');
     $('#menuEmpty').toggleClass('d-none', state !== 'empty');
@@ -511,7 +338,7 @@ function render() {
     if (isLoading) return;
 
     if (dishes.length === 0) {
-        showState(loadFailed ? 'error' : 'none');
+        showState(loadFailed ? 'error' : 'nodata');
         return;
     }
 
@@ -524,8 +351,7 @@ function render() {
         const ofDay = dishes.filter(d => d.day === day && f.places.includes(d.restaurant.id));
 
         const matching = ofDay
-            .filter(d => f.type === 'all' || d.type === f.type)
-            .filter(d => d.price == null || d.price <= f.maxPrice)
+            .filter(d => f.types.length === 0 || f.types.includes(d.type))
             .sort((a, b) => restaurantIndex(a) - restaurantIndex(b)
                 || TYPE_ORDER.indexOf(a.type) - TYPE_ORDER.indexOf(b.type));
 
@@ -542,7 +368,7 @@ function render() {
             role: 'status',
             text: `${r.name}: Menu na tento deň nie je k dispozícii.`
         })));
-        matching.forEach(d => items.push(d.getHTMLDish()));
+        matching.forEach(d => items.push(renderDishCard(d)));
         shown += matching.length;
     });
 
@@ -556,12 +382,48 @@ function render() {
     $('#menuCount').text(formatCount(shown)).removeClass('d-none');
 }
 
+function timeElement(iso) {
+    return $('<time>', { datetime: iso, text: formatDateTime(iso) });
+}
+
 function renderLastUpdates() {
-    const $list = $('#lastUpdate').empty();
+    const known = RESTAURANTS
+        .map(r => ({ name: r.name, date: new Date(updates[r.id]) }))
+        .filter(x => !isNaN(x.date));
+    const $box = $('#lastUpdate').empty().removeAttr('title');
+
+    if (known.length === 0) {
+        $box.text('—');
+    } else {
+        const oldest = known.reduce((a, b) => (a.date <= b.date ? a : b)).date;
+        $box
+            .append(timeElement(oldest.toISOString()))
+            .attr('title', known.map(x => `${x.name}: ${formatDateTime(x.date.toISOString())}`).join('\n'));
+    }
+
     RESTAURANTS.forEach(r => {
-        const when = updates[r.id] ? formatDateTime(updates[r.id]) : 'zatiaľ nenačítané';
-        $list.append($('<li>', { text: `${r.name}: ${when}` }));
+        const $t = $(`[data-last-update="${r.id}"]`).empty();
+        const iso = updates[r.id];
+        if (iso && !isNaN(new Date(iso))) {
+            $t.append(timeElement(iso));
+        } else {
+            $t.text('zatiaľ nenačítané');
+        }
     });
+}
+
+function clearStoredData() {
+    if (isLoading) return;
+    if (!window.confirm('Naozaj chcete vymazať menu uložené v tomto prehliadači?')) return;
+
+    storageRemove(LOCAL_STORAGE_REST);
+    storageRemove(LOCAL_STORAGE_UPDATE);
+    dishes = [];
+    updates = {};
+    loadFailed = false;
+    clearAlerts();
+    renderLastUpdates();
+    render();
 }
 
 function showAlert(type, message, tag = 'fetch') {
@@ -580,18 +442,35 @@ function clearAlerts(tag = 'fetch') {
 }
 
 function setBusy(on) {
-    $('#updateBtn, #clearDataBtn, #retryBtn').prop('disabled', on);
+    $('#updateBtn, #retryBtn, #loadBtn, #clearDataBtn').prop('disabled', on);
     $('#updateBtn').text(on ? 'Načítavam…' : 'Aktualizovať menu');
+}
+
+function bindNavigation() {
+    const panel = document.getElementById('offcanvasNavbar');
+
+    $('#offcanvasNavbar .nav-link').on('click', function (e) {
+        const $target = $(this.hash);
+        if (!$target.length) return;
+        e.preventDefault();
+
+        $('#offcanvasNavbar .nav-link').removeClass('active');
+        $(this).addClass('active');
+
+        const scrollToTarget = () => $target[0].scrollIntoView({ behavior: 'smooth' });
+        if (window.bootstrap && panel.classList.contains('show')) {
+            panel.addEventListener('hidden.bs.offcanvas', scrollToTarget, { once: true });
+            bootstrap.Offcanvas.getInstance(panel).hide();
+        } else {
+            scrollToTarget();
+        }
+    });
 }
 
 function bindEvents() {
     $('#filters')
         .on('submit', e => e.preventDefault())
-        .on('change', 'input[name="day"], input[name="places"], input[name="t-type"]', render)
-        .on('input', '#maxPrice', function () {
-            updatePriceOut();
-            render();
-        });
+        .on('change', 'input[name="day"], input[name="places"], input[name="t-type"]', render);
 
     $('#resetFiltersBtn, #clearFiltersBtn').on('click', resetFilters);
 
@@ -599,8 +478,8 @@ function bindEvents() {
         e.preventDefault();
         ParseMenu(RESTAURANTS);
     });
-    $('#retryBtn').on('click', () => ParseMenu(RESTAURANTS));
-    $('#clearDataBtn').on('click', ClearData);
+    $('#retryBtn, #loadBtn').on('click', () => ParseMenu(RESTAURANTS));
+    $('#clearDataBtn').on('click', clearStoredData);
 
     $('#sourceLocal')
         .prop('checked', getSourceMode() === 'local')
@@ -608,6 +487,8 @@ function bindEvents() {
             storageSet(LOCAL_STORAGE_SOURCE, this.checked ? 'local' : 'live');
             ParseMenu(RESTAURANTS);
         });
+
+    bindNavigation();
 }
 
 async function Init() {
@@ -626,7 +507,6 @@ async function Init() {
 $(document).ready(function () {
     buildRestaurantFilters();
     setDefaultDay();
-    updatePriceOut();
     bindEvents();
     Init();
 });

@@ -1,11 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="sk">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Obedové menu v okolí fakulty | FEI STU</title>
+    <meta name="description"
+        content="Denné a týždenné obedové menu jedální a reštaurácií v okolí FEI STU na jednom mieste.">
+    <meta name="author" content="Andrii Horbunov">
+    <meta name="theme-color" content="#009970">
 
+    <link rel="icon" href="./Media/Icons/Icon.png">
+    <link rel="preload" href="./Fonts/Poppins-Black.ttf" as="font" type="font/ttf" crossorigin>
 
     <link rel="stylesheet" href="./Style/Style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -15,271 +21,361 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 </head>
 
-<body bg-white>
+<body>
 
-    <header>
-        <nav class="navbar navbar-expand-lg">
-            <div class="container aling-item-center">
-                <a class="navbar-brand me-auto d-flex flex-row" href="#">
-                    <img src="./Media/Icons/fork-knife.svg" alt="vudlica" loading="lazy" width="50px">
-                </a>
-                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar"
-                    aria-labelledby="offcanvasNavbarLabel">
-                    <div class="offcanvas-header">
-                        <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Restauracie v okoli fakulty</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    <div id="top" class="page-top">
+        <header class="site-header">
+            <nav class="navbar navbar-expand-lg">
+                <div class="container align-items-center">
+                    <a class="navbar-brand me-auto d-flex flex-row" href="#top">
+                        <img src="./Media/Icons/fork-knife.svg" alt="Domov – vidlica a nôž" width="50" height="50">
+                    </a>
+                    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar"
+                        aria-labelledby="offcanvasNavbarLabel">
+                        <div class="offcanvas-header">
+                            <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Reštaurácie v okolí fakulty</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="offcanvas-body">
+                            <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
+                                <li class="nav-item">
+                                    <a class="nav-link  mx-lg-2 active" aria-current="page" href="#top">Domov</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link mx-lg-2 " href="#restaurants">Reštaurácie</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link  mx-lg-2" href="#menuSection">Menu</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link mx-lg-2 " href="#about">O projekte</a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
-                    <div class="offcanvas-body">
-                        <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
-                            <li class="nav-item">
-                                <a class="nav-link  mx-lg-2 active" aria-current="page" href="#">Home</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link mx-lg-2 " href="#">Filters</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link  mx-lg-2" aria-current="page" href="#">Eat</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link mx-lg-2 " href="#">About project</a>
-                            </li>
-                        </ul>
+
+                    <div class="d-flex flex-column align-items-center justify-content-center">
+                        <a href="#" id="updateBtnNav" class="authorization-button">Aktualizovať</a>
                     </div>
-                </div>
 
-                <div class="d-flex flex-column align-item-center justify-content-center">
-                    <a href="#" id="updateBtnNav" class="authorization-button">Aktualizovať</a>
+                    <button class="navbar-toggler pe-0" type="button" data-bs-toggle="offcanvas"
+                        data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar"
+                        aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
                 </div>
+            </nav>
+        </header>
 
-                <button class="navbar-toggler pe-0" type="button" data-bs-toggle="offcanvas"
-                    data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+        <section class="poster w-100" aria-labelledby="siteTitle">
+            <img src="./Media/Images/Poster3-1.png" class="d-block w-100" alt="" width="1200" height="600">
+            <div class="poster-overlay d-flex flex-column align-items-center justify-content-center text-center">
+                <h1 id="siteTitle" class="poster-title">Obedové menu v okolí fakulty</h1>
+                <p class="poster-subtitle d-none d-sm-block">Denné menu jedální okolo FEI STU na jednom mieste</p>
             </div>
-        </nav>
-    </header>
+        </section>
 
-    <section class="poster w-100">
-        <img src="./Media/Images/Poster1.png" class="d-block w-100" alt="...">
-    </section>
+        <main class="container-fluid py-5">
 
-    <main class="container-fluid py-5">
+            <h2 class="text-center p-5">Čo by ste si dnes dali?</h2>
 
-        <h2 class="text-center p-5">Co by ste si dali dnes??</h2>
-
-        <div class="row g-4">
-
-            <aside class="col-lg-3">
-                <section class="card shadow-sm sticky-lg-top" aria-label="Filtre menu">
-                    <div class="card-header d-flex justify-content-between align-items-center">
-                        <span class="fw-semibold"><i class="bi bi-funnel me-1"></i>Filtre</span>
-                        <button class="btn btn-sm btn-outline-secondary d-lg-none" type="button"
-                            data-bs-toggle="collapse" data-bs-target="#filters" aria-expanded="false"
-                            aria-controls="filters">Zobraziť</button>
-                    </div>
-
-                    <form id="filters" class="card-body collapse d-lg-block">
-                        <div class="mb-3">
-                            <div class="form-label small text-uppercase text-body-secondary fw-semibold">Deň</div>
-                            <div class="d-flex flex-wrap gap-2">
-                                <input type="radio" class="btn-check" name="day" id="day-1" value="1"
-                                    autocomplete="off">
-                                <label class="btn btn-outline-primary btn-sm" for="day-1">Pondelok</label>
-
-                                <input type="radio" class="btn-check" name="day" id="day-2" value="2"
-                                    autocomplete="off">
-                                <label class="btn btn-outline-primary btn-sm" for="day-2">Utorok</label>
-
-                                <input type="radio" class="btn-check" name="day" id="day-3" value="3"
-                                    autocomplete="off">
-                                <label class="btn btn-outline-primary btn-sm" for="day-3">Streda</label>
-
-                                <input type="radio" class="btn-check" name="day" id="day-4" value="4"
-                                    autocomplete="off">
-                                <label class="btn btn-outline-primary btn-sm" for="day-4">Štvrtok</label>
-
-                                <input type="radio" class="btn-check" name="day" id="day-5" value="5"
-                                    autocomplete="off">
-                                <label class="btn btn-outline-primary btn-sm" for="day-5">Piatok</label>
-
-                                <input type="radio" class="btn-check" name="day" id="day-all" value="all"
-                                    autocomplete="off">
-                                <label class="btn btn-outline-dark btn-sm" for="day-all">Celý týždeň</label>
-                            </div>
-                        </div>
-
-                        <div class="mb-3">
-                            <div class="form-label small text-uppercase text-body-secondary fw-semibold">Reštaurácie
-                            </div>
-                            <div id="restaurantFilters" class="d-flex flex-wrap gap-2"></div>
-                        </div>
-
-                        <div class="mb-3">
-                            <div class="form-label small text-uppercase text-body-secondary fw-semibold">Typ jedla</div>
-                            <div class="d-flex flex-wrap gap-2" role="radiogroup" aria-label="Typ jedla">
-                                <input type="radio" class="btn-check" name="t-type" id="t-all" value="all"
-                                    autocomplete="off" checked>
-                                <label class="btn btn-outline-secondary btn-sm" for="t-all">Všetko</label>
-
-                                <input type="radio" class="btn-check" name="t-type" id="t-soup" value="soup"
-                                    autocomplete="off">
-                                <label class="btn btn-outline-secondary btn-sm" for="t-soup">Polievky</label>
-
-                                <input type="radio" class="btn-check" name="t-type" id="t-main" value="main"
-                                    autocomplete="off">
-                                <label class="btn btn-outline-secondary btn-sm" for="t-main">Hlavné</label>
-
-                                <input type="radio" class="btn-check" name="t-type" id="t-salad" value="salad"
-                                    autocomplete="off">
-                                <label class="btn btn-outline-secondary btn-sm" for="t-salad">Šaláty</label>
-
-                                <input type="radio" class="btn-check" name="t-type" id="t-sweet" value="sweet"
-                                    autocomplete="off">
-                                <label class="btn btn-outline-secondary btn-sm" for="t-sweet">Dezerty</label>
-                            </div>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="maxPrice"
-                                class="form-label small text-uppercase text-body-secondary fw-semibold">
-                                Max. cena: <output id="priceOut" class="text-body">15</output> €
-                            </label>
-                            <input type="range" class="form-range" id="maxPrice" name="maxPrice" min="3" max="15"
-                                step="0.5" value="15">
-                        </div>
-
-                        <button type="button" id="resetFiltersBtn" class="btn btn-outline-danger w-100">
-                            <i class="bi bi-x-circle me-1"></i>Zrušiť filtre
-                        </button>
-
-                        <div class="reset-data pt-5">
-                            <button type="button" id="updateBtn" class="btn authorization-button w-100">Aktualizovať menu</button>
-                            <button type="button" id="clearDataBtn" class="btn btn-outline-secondary btn-sm w-100 mt-2">
-                                <i class="bi bi-trash me-1"></i>Vymazať uložené dáta
-                            </button>
-
-                            <div class="form-check form-switch mt-3">
-                                <input class="form-check-input" type="checkbox" role="switch" id="sourceLocal"
-                                    autocomplete="off">
-                                <label class="form-check-label small" for="sourceLocal">Lokálna kópia stránok (ladenie)</label>
-                            </div>
-
-                            <p class="text-center small fw-semibold mt-3 mb-1">Naposledy aktualizované:</p>
-                            <ul id="lastUpdate" class="list-unstyled small text-center text-body-secondary mb-0"></ul>
-                        </div>
-                    </form>
-                </section>
-            </aside>
-
-            <section class="col-lg-9">
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h2 class="h1 mb-0 w-100 text-center">Menu</h2>
-                    <span id="menuCount" class="badge text-bg-secondary d-none"></span>
-                </div>
-
-                <div id="menuAlerts" aria-live="polite"></div>
-
-                <div id="menu" class="d-flex flex-wrap justify-content-center gap-3">
-                    <!-- ZOZNAM JEDÁL (plní script.js) -->
-                    <div id="dishList" class="d-flex flex-wrap justify-content-center gap-3 w-100 d-none"></div>
-
-                    <!-- LOADING -->
-                    <div id="menuLoading" class="d-flex flex-wrap gap-3 placeholder-glow" role="status">
-                        <span class="visually-hidden">Načítavam menu…</span>
-
-                        <article class="card dish-card dish-card--skeleton" aria-hidden="true">
-                            <header class="card-header d-flex align-items-center gap-3">
-                                <div class="dish-photo placeholder flex-shrink-0"></div>
-                                <div class="flex-grow-1">
-                                    <span class="placeholder col-7 d-block mb-2"></span>
-                                    <span class="placeholder col-4 d-block"></span>
-                                </div>
-                            </header>
+            <section id="restaurants" class="container mb-5" aria-labelledby="restaurantsTitle">
+                <h2 id="restaurantsTitle" class="h1 text-center mb-4">Reštaurácie v okolí fakulty</h2>
+                <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-3">
+                    <div class="col">
+                        <article class="card h-100 shadow-sm">
                             <div class="card-body">
-                                <span class="placeholder col-3 mb-3 d-block"></span>
-                                <span class="placeholder col-10 d-block mb-2"></span>
-                                <span class="placeholder col-6 d-block"></span>
+                                <h3 class="h5 card-title">Eat &amp; Meet</h3>
+                                <p class="card-text small">Študentská reštaurácia v areáli internátov Staré Grunty.</p>
+                                <ul class="list-unstyled small mb-0">
+                                <li class="d-flex gap-2 mb-1"><i class="bi bi-geo-alt flex-shrink-0"></i><span>Staré Grunty 211/36, Karlova Ves (Blok AD-U)</span></li>
+                                <li class="d-flex gap-2 mb-1"><i class="bi bi-clock flex-shrink-0"></i><span>Po–Pi 7:00–20:30, So–Ne 9:00–19:00</span></li>
+                                <li class="d-flex gap-2 mb-1"><i class="bi bi-telephone flex-shrink-0"></i><span>+421 903 635 457</span></li>
+                                </ul>
                             </div>
-                            <footer class="card-footer">
-                                <span class="placeholder col-2 me-1"></span>
-                                <span class="placeholder col-1 me-1"></span>
-                                <span class="placeholder col-1"></span>
-                            </footer>
-                        </article>
-
-                        <article class="card dish-card dish-card--skeleton" aria-hidden="true">
-                            <header class="card-header d-flex align-items-center gap-3">
-                                <div class="dish-photo placeholder flex-shrink-0"></div>
-                                <div class="flex-grow-1">
-                                    <span class="placeholder col-7 d-block mb-2"></span>
-                                    <span class="placeholder col-4 d-block"></span>
-                                </div>
-                            </header>
-                            <div class="card-body">
-                                <span class="placeholder col-3 mb-3 d-block"></span>
-                                <span class="placeholder col-10 d-block mb-2"></span>
-                                <span class="placeholder col-6 d-block"></span>
-                            </div>
-                            <footer class="card-footer">
-                                <span class="placeholder col-2 me-1"></span>
-                                <span class="placeholder col-1 me-1"></span>
-                                <span class="placeholder col-1"></span>
-                            </footer>
-                        </article>
-
-                        <article class="card dish-card dish-card--skeleton" aria-hidden="true">
-                            <header class="card-header d-flex align-items-center gap-3">
-                                <div class="dish-photo placeholder flex-shrink-0"></div>
-                                <div class="flex-grow-1">
-                                    <span class="placeholder col-7 d-block mb-2"></span>
-                                    <span class="placeholder col-4 d-block"></span>
-                                </div>
-                            </header>
-                            <div class="card-body">
-                                <span class="placeholder col-3 mb-3 d-block"></span>
-                                <span class="placeholder col-10 d-block mb-2"></span>
-                                <span class="placeholder col-6 d-block"></span>
-                            </div>
-                            <footer class="card-footer">
-                                <span class="placeholder col-2 me-1"></span>
-                                <span class="placeholder col-1 me-1"></span>
-                                <span class="placeholder col-1"></span>
+                            <footer class="card-footer d-flex flex-wrap justify-content-between align-items-center gap-2">
+                                <small class="text-body-secondary">Aktualizované: <span data-last-update="eatandmeet">—</span></small>
+                                <a class="btn btn-sm btn-outline-success" href="https://eatandmeet.sk/" target="_blank" rel="noopener">Web</a>
                             </footer>
                         </article>
                     </div>
-
-                    <!-- FILTER ERORR -->
-                    <div id="menuEmpty" class="text-center py-5 m-auto d-none" role="status">
-                        <i class="bi bi-search display-1 text-body-tertiary"></i>
-                        <h3 class="h5 mt-3">Žiadne jedlo sme nenašli</h3>
-                        <p class="text-body-secondary mb-3">Skúste zmeniť filtre alebo vyhľadávanie.</p>
-                        <button type="button" id="clearFiltersBtn" class="btn btn-outline-danger">
-                            <i class="bi bi-x-circle me-1"></i>Zrušiť filtre
-                        </button>
+                    <div class="col">
+                        <article class="card h-100 shadow-sm">
+                            <div class="card-body">
+                                <h3 class="h5 card-title">FiitFood</h3>
+                                <p class="card-text small">Jedáleň a bufet pri FIIT STU, prevádzka FreeFood.</p>
+                                <ul class="list-unstyled small mb-0">
+                                <li class="d-flex gap-2 mb-1"><i class="bi bi-geo-alt flex-shrink-0"></i><span>FIIT STU, Ilkovičova 2, Bratislava</span></li>
+                                <li class="d-flex gap-2 mb-1"><i class="bi bi-info-circle flex-shrink-0"></i><span>pri jedlách sú gramáže a alergény</span></li>
+                                </ul>
+                            </div>
+                            <footer class="card-footer d-flex flex-wrap justify-content-between align-items-center gap-2">
+                                <small class="text-body-secondary">Aktualizované: <span data-last-update="fiitfood">—</span></small>
+                                <a class="btn btn-sm btn-outline-success" href="http://www.freefood.sk/menu/" target="_blank" rel="noopener">Web</a>
+                            </footer>
+                        </article>
                     </div>
-
-                    <!-- 3) ВСЯ ЗАГРУЗКА НЕ УДАЛАСЬ -->
-                    <div id="menuError" class="text-center py-5 m-auto d-none" role="alert">
-                        <i class="bi bi-cloud-slash display-1 text-body-tertiary"></i>
-                        <h3 class="h5 mt-3">Menu sa nepodarilo načítať</h3>
-                        <p class="text-body-secondary mb-3">Stránky reštaurácií sú momentálne nedostupné. Skúste to
-                            prosím neskôr.</p>
-                        <button type="button" id="retryBtn" class="btn btn-primary">
-                            <i class="bi bi-arrow-clockwise me-1"></i>Skúsiť znova
-                        </button>
+                    <div class="col">
+                        <article class="card h-100 shadow-sm">
+                            <div class="card-body">
+                                <h3 class="h5 card-title">Jedáleň PriF UK</h3>
+                                <p class="card-text small">Jedáleň a bufet Delikanti v Prírodovedeckej fakulte UK.</p>
+                                <ul class="list-unstyled small mb-0">
+                                <li class="d-flex gap-2 mb-1"><i class="bi bi-geo-alt flex-shrink-0"></i><span>PriF UK, Ilkovičova 6, pavilón CH1 (prízemie)</span></li>
+                                <li class="d-flex gap-2 mb-1"><i class="bi bi-clock flex-shrink-0"></i><span>7:00–15:30</span></li>
+                                <li class="d-flex gap-2 mb-1"><i class="bi bi-info-circle flex-shrink-0"></i><span>ceny jedál web neuvádza</span></li>
+                                </ul>
+                            </div>
+                            <footer class="card-footer d-flex flex-wrap justify-content-between align-items-center gap-2">
+                                <small class="text-body-secondary">Aktualizované: <span data-last-update="prifuk">—</span></small>
+                                <a class="btn btn-sm btn-outline-success" href="https://www.delikanti.sk/" target="_blank" rel="noopener">Web</a>
+                            </footer>
+                        </article>
                     </div>
                 </div>
             </section>
 
-        </div>
-    </main>
+
+            <div id="menuSection" class="d-flex justify-content-center align-items-center gap-3 mb-3">
+                <h2 class="h1 mb-0">Menu</h2>
+                <span id="menuCount" class="badge text-bg-secondary d-none"></span>
+            </div>
+
+            <div id="menuAlerts" aria-live="polite"></div>
+
+            <div class="row g-4">
+                <aside class="col-lg-3">
+                    <div class="card shadow-sm filters-card" role="group" aria-label="Filtre menu">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <span class="fw-semibold"><i class="bi bi-funnel me-1"></i>Filtre</span>
+                            <button class="btn btn-sm btn-outline-secondary d-lg-none" type="button"
+                                data-bs-toggle="collapse" data-bs-target="#filters" aria-expanded="false"
+                                aria-controls="filters">Zobraziť</button>
+                        </div>
+
+                        <form id="filters" class="card-body collapse d-lg-block">
+                            <div class="mb-3">
+                                <div class="form-label small text-uppercase text-body-secondary fw-semibold">Deň</div>
+                                <div class="d-flex flex-wrap gap-2">
+                                    <input type="radio" class="btn-check" name="day" id="day-1" value="1"
+                                        autocomplete="off">
+                                    <label class="btn btn-outline-primary btn-sm" for="day-1">Pondelok</label>
+
+                                    <input type="radio" class="btn-check" name="day" id="day-2" value="2"
+                                        autocomplete="off">
+                                    <label class="btn btn-outline-primary btn-sm" for="day-2">Utorok</label>
+
+                                    <input type="radio" class="btn-check" name="day" id="day-3" value="3"
+                                        autocomplete="off">
+                                    <label class="btn btn-outline-primary btn-sm" for="day-3">Streda</label>
+
+                                    <input type="radio" class="btn-check" name="day" id="day-4" value="4"
+                                        autocomplete="off">
+                                    <label class="btn btn-outline-primary btn-sm" for="day-4">Štvrtok</label>
+
+                                    <input type="radio" class="btn-check" name="day" id="day-5" value="5"
+                                        autocomplete="off">
+                                    <label class="btn btn-outline-primary btn-sm" for="day-5">Piatok</label>
+
+                                    <input type="radio" class="btn-check" name="day" id="day-all" value="all"
+                                        autocomplete="off">
+                                    <label class="btn btn-outline-dark btn-sm" for="day-all">Celý týždeň</label>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <div class="form-label small text-uppercase text-body-secondary fw-semibold">Reštaurácie
+                                </div>
+                                <div id="restaurantFilters" class="d-flex flex-wrap gap-2"></div>
+                            </div>
+
+                            <div class="mb-3">
+                                <div class="form-label small text-uppercase text-body-secondary fw-semibold">Typ jedla
+                                </div>
+                                <div class="d-flex flex-wrap gap-2" role="group" aria-label="Typ jedla">
+                                    <input type="checkbox" class="btn-check" name="t-type" id="t-soup" value="soup"
+                                        autocomplete="off">
+                                    <label class="btn btn-outline-secondary btn-sm" for="t-soup">Polievky</label>
+
+                                    <input type="checkbox" class="btn-check" name="t-type" id="t-main" value="main"
+                                        autocomplete="off">
+                                    <label class="btn btn-outline-secondary btn-sm" for="t-main">Hlavné</label>
+
+                                    <input type="checkbox" class="btn-check" name="t-type" id="t-salad" value="salad"
+                                        autocomplete="off">
+                                    <label class="btn btn-outline-secondary btn-sm" for="t-salad">Šaláty</label>
+
+                                    <input type="checkbox" class="btn-check" name="t-type" id="t-sweet" value="sweet"
+                                        autocomplete="off">
+                                    <label class="btn btn-outline-secondary btn-sm" for="t-sweet">Dezerty</label>
+                                </div>
+                                <div class="form-text">Bez výberu sa zobrazia všetky typy.</div>
+                            </div>
+
+                            <button type="button" id="resetFiltersBtn" class="btn btn-outline-secondary w-100">
+                                <i class="bi bi-x-circle me-1"></i>Zrušiť filtre
+                            </button>
+
+                            <div class="reset-data border-top mt-3 pt-3">
+                                <button type="button" id="updateBtn" class="btn authorization-button w-100">Aktualizovať
+                                    menu</button>
+
+                                <button type="button" id="clearDataBtn" class="btn btn-outline-danger w-100 mt-2">
+                                    <i class="bi bi-trash3 me-1"></i>Vymazať uložené dáta
+                                </button>
+
+                                <div class="form-check form-switch mt-3">
+                                    <input class="form-check-input" type="checkbox" role="switch" id="sourceLocal"
+                                        autocomplete="off">
+                                    <label class="form-check-label small" for="sourceLocal">Lokálna kópia stránok
+                                        (ladenie)</label>
+                                </div>
+
+                                <p class="text-center small mt-3 mb-0">Naposledy aktualizované:
+                                    <span id="lastUpdate" class="d-block fw-semibold">—</span>
+                                </p>
+                            </div>
+                        </form>
+                    </div>
+                </aside>
+
+                <div class="col-lg-9">
+                    <div id="menu" class="d-flex flex-wrap justify-content-center gap-3">
+                        <div id="dishList" class="d-flex flex-wrap justify-content-center gap-3 w-100 d-none"></div>
+
+                        <div id="menuLoading" class="d-flex flex-wrap gap-3 placeholder-glow" role="status">
+                            <span class="visually-hidden">Načítavam menu…</span>
+
+                            <article class="card dish-card dish-card--skeleton" aria-hidden="true">
+                                <header class="card-header d-flex align-items-center gap-3">
+                                    <div class="dish-photo placeholder flex-shrink-0"></div>
+                                    <div class="flex-grow-1">
+                                        <span class="placeholder col-7 d-block mb-2"></span>
+                                        <span class="placeholder col-4 d-block"></span>
+                                    </div>
+                                </header>
+                                <div class="card-body">
+                                    <span class="placeholder col-3 mb-3 d-block"></span>
+                                    <span class="placeholder col-10 d-block mb-2"></span>
+                                    <span class="placeholder col-6 d-block"></span>
+                                </div>
+                                <footer class="card-footer">
+                                    <span class="placeholder col-2 me-1"></span>
+                                    <span class="placeholder col-1 me-1"></span>
+                                    <span class="placeholder col-1"></span>
+                                </footer>
+                            </article>
+
+                            <article class="card dish-card dish-card--skeleton" aria-hidden="true">
+                                <header class="card-header d-flex align-items-center gap-3">
+                                    <div class="dish-photo placeholder flex-shrink-0"></div>
+                                    <div class="flex-grow-1">
+                                        <span class="placeholder col-7 d-block mb-2"></span>
+                                        <span class="placeholder col-4 d-block"></span>
+                                    </div>
+                                </header>
+                                <div class="card-body">
+                                    <span class="placeholder col-3 mb-3 d-block"></span>
+                                    <span class="placeholder col-10 d-block mb-2"></span>
+                                    <span class="placeholder col-6 d-block"></span>
+                                </div>
+                                <footer class="card-footer">
+                                    <span class="placeholder col-2 me-1"></span>
+                                    <span class="placeholder col-1 me-1"></span>
+                                    <span class="placeholder col-1"></span>
+                                </footer>
+                            </article>
+
+                            <article class="card dish-card dish-card--skeleton" aria-hidden="true">
+                                <header class="card-header d-flex align-items-center gap-3">
+                                    <div class="dish-photo placeholder flex-shrink-0"></div>
+                                    <div class="flex-grow-1">
+                                        <span class="placeholder col-7 d-block mb-2"></span>
+                                        <span class="placeholder col-4 d-block"></span>
+                                    </div>
+                                </header>
+                                <div class="card-body">
+                                    <span class="placeholder col-3 mb-3 d-block"></span>
+                                    <span class="placeholder col-10 d-block mb-2"></span>
+                                    <span class="placeholder col-6 d-block"></span>
+                                </div>
+                                <footer class="card-footer">
+                                    <span class="placeholder col-2 me-1"></span>
+                                    <span class="placeholder col-1 me-1"></span>
+                                    <span class="placeholder col-1"></span>
+                                </footer>
+                            </article>
+                        </div>
+
+                        <div id="menuEmpty" class="text-center py-5 m-auto d-none" role="status">
+                            <i class="bi bi-search display-1 text-body-tertiary"></i>
+                            <h3 class="h5 mt-3">Žiadne jedlo sme nenašli</h3>
+                            <p class="text-body-secondary mb-3">Skúste zmeniť filtre alebo vyhľadávanie.</p>
+                            <button type="button" id="clearFiltersBtn" class="btn btn-outline-danger">
+                                <i class="bi bi-x-circle me-1"></i>Zrušiť filtre
+                            </button>
+                        </div>
+
+                        <div id="menuNoData" class="text-center py-5 m-auto d-none" role="status">
+                            <i class="bi bi-trash3 display-1 text-body-tertiary"></i>
+                            <h3 class="h5 mt-3">Žiadne uložené menu</h3>
+                            <p class="text-body-secondary mb-3">Uložené dáta boli vymazané. Menu sa načíta znova po
+                                kliknutí na tlačidlo.</p>
+                            <button type="button" id="loadBtn" class="btn btn-primary">
+                                <i class="bi bi-arrow-clockwise me-1"></i>Načítať menu
+                            </button>
+                        </div>
+
+                        <div id="menuError" class="text-center py-5 m-auto d-none" role="alert">
+                            <i class="bi bi-cloud-slash display-1 text-body-tertiary"></i>
+                            <h3 class="h5 mt-3">Menu sa nepodarilo načítať</h3>
+                            <p class="text-body-secondary mb-3">Stránky reštaurácií sú momentálne nedostupné. Skúste to
+                                prosím neskôr.</p>
+                            <button type="button" id="retryBtn" class="btn btn-primary">
+                                <i class="bi bi-arrow-clockwise me-1"></i>Skúsiť znova
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <section id="about" class="container mt-5 pt-5" aria-labelledby="aboutTitle">
+                <h2 id="aboutTitle" class="h1 text-center mb-4">O projekte</h2>
+                <div class="row g-4">
+                    <div class="col-12 col-md-6">
+                        <h3 class="h5">Použité knižnice</h3>
+                        <ul>
+                            <li><a class="link-success" href="https://getbootstrap.com/" target="_blank" rel="noopener">Bootstrap</a> 5.3.8 a
+                                <a class="link-success" href="https://icons.getbootstrap.com/" target="_blank" rel="noopener">Bootstrap Icons</a> 1.11.3
+                                – vzhľad, mriežka a ikony</li>
+                            <li><a class="link-success" href="https://jquery.com/" target="_blank" rel="noopener">jQuery</a> 3.7.1
+                                – načítanie stránok (AJAX) a spracovanie HTML</li>
+                        </ul>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <h3 class="h5">Zdroje dát</h3>
+                        <ul>
+                            <li><a class="link-success" href="https://eatandmeet.sk/" target="_blank" rel="noopener">Eat &amp; Meet</a></li>
+                            <li><a class="link-success" href="http://www.freefood.sk/menu/" target="_blank" rel="noopener">FiitFood (FreeFood)</a></li>
+                            <li><a class="link-success" href="https://www.delikanti.sk/" target="_blank" rel="noopener">Jedáleň PriF UK (Delikanti)</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
 
     <footer class="py-3 my-4">
-        <ul class="nav justify-content-center border-bottom pb-3 mb-3">
-            <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Home</a></li>
-            <li class="nav-item"><a href="https://github.com/werr2410/Z2_Horbunov" class="nav-link px-2 text-body-secondary">O projekte</a></li>
-            <li class="nav-item"><a href="https://github.com/werr2410/Z2_Horbunov" class="nav-link px-2 text-body-secondary">Zdroje</a></li>
-        </ul>
+        <nav aria-label="Pätička">
+            <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+                <li class="nav-item"><a href="#top" class="nav-link px-2 text-body-secondary">Domov</a></li>
+                <li class="nav-item"><a href="#about" class="nav-link px-2 text-body-secondary">O projekte</a></li>
+                <li class="nav-item"><a href="https://github.com/werr2410/Z2_Horbunov"
+                        class="nav-link px-2 text-body-secondary">Zdroje</a></li>
+            </ul>
+        </nav>
         <p class="text-center text-body-secondary">© 2026 Andrii Horbunov</p>
     </footer>
 
@@ -287,6 +383,7 @@
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
         crossorigin="anonymous"></script>
 
+    <script src="./Js/parsers.js"></script>
     <script src="./Js/script.js"></script>
 </body>
 
