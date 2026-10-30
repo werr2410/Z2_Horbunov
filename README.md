@@ -1,6 +1,6 @@
 # Obedové menu v okolí fakulty
 
-Zadanie č. 2 z predmetu WEBTE1 (FEI STU, ZS 2026/2027). Autor: Andrii Horbunov.
+Zadanie č. 2 z predmetu WEBTE1. Autor: Andrii Horbunov.
 
 Stránka načíta denné menu troch jedální v okolí fakulty, spracuje ho do jednotnej štruktúry a zobrazí podľa dňa v týždni. Beží výlučne na strane klienta (HTML, CSS, JavaScript).
 
@@ -18,14 +18,6 @@ Stránka načíta denné menu troch jedální v okolí fakulty, spracuje ho do j
 - Prepínač „Lokálna kópia stránok“ načíta uložené kópie z priečinka `TemplatePages/` namiesto živých stránok.
 - Chyba pri jednej reštaurácii nezabráni zobrazeniu ostatných.
 
-## Štruktúra
-
-- `index.html` – stránka
-- `Style/Style.css` – vlastné štýly
-- `Js/script.js` – načítanie, ukladanie, filtre a vykresľovanie
-- `Js/parsers.js` – trieda `Dish` a parsery jednotlivých reštaurácií
-- `Fonts/` – lokálne fonty
-- `TemplatePages/` – lokálne kópie stránok reštaurácií
 
 ## Použitie AI
 
@@ -44,5 +36,3 @@ Knižnice (načítavané z CDN):
 - Bootstrap 5.3.8 – licencia MIT
 - Bootstrap Icons 1.11.3 – licencia MIT
 - jQuery 3.7.1 – licencia MIT
-
-Obsah menu patrí príslušným reštauráciám a jedálňam. Stránka ho len zobrazuje na študijné účely.
