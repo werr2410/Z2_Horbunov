@@ -167,7 +167,6 @@ h6 {
   padding: .9rem 1.25rem 1.1rem;
 }
 
-/* fotka / emoji v kruhu */
 .dish-photo {
   width: 4.5rem;
   height: 4.5rem;
@@ -297,20 +296,23 @@ h6 {
   height: auto;
 }
 
+
 .poster-overlay {
   position: absolute;
   inset: 0;
   padding: 1rem;
-  background: radial-gradient(ellipse at center, rgb(0 0 0 / .5), rgb(0 0 0 / .25));
+  background: radial-gradient(ellipse at center, rgba(66, 65, 65, 0.2), rgba(64, 64, 64, 0.1));
 }
+
 
 .poster-title,
 .poster-subtitle {
   font-family: StrictFont, sans-serif;
   font-weight: 900;
-  color: #fff;
-  text-shadow: 0 .15rem .6rem rgb(0 0 0 / .6);
+  color: #390c0c;
+  text-shadow: 0 .15rem .6rem rgb(0 0 0 / .3);
 }
+
 
 .poster-title {
   margin: 0;
@@ -318,6 +320,7 @@ h6 {
   font-size: clamp(1.25rem, 5vw, 3.75rem);
   line-height: 1.1;
 }
+
 
 .poster-subtitle {
   margin: .75rem 0 0;
@@ -341,12 +344,3 @@ h6 {
   display: flow-root;
 }
 
-@media (min-width: 992px) {
-  .filters-card {
-    position: sticky;
-    top: 6.75rem;
-    z-index: 1;
-    max-height: calc(100vh - 7.5rem);
-    overflow-y: auto;
-  }
-}
